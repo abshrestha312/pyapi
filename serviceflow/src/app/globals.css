@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 84% 4.9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 84% 4.9%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+}
+
+@layer components {
+  .sf-sidebar {
+    @apply bg-sf-navy-900 text-white min-h-screen;
+  }
+  
+  .sf-nav-item {
+    @apply flex items-center px-4 py-3 text-sf-navy-100 hover:bg-sf-navy-800 hover:text-white transition-colors cursor-pointer;
+  }
+  
+  .sf-nav-item.active {
+    @apply bg-sf-navy-700 text-white border-r-4 border-sf-honey-500;
+  }
+  
+  .sf-card {
+    @apply bg-white rounded-lg shadow-sm border border-gray-200 p-6;
+  }
+  
+  .sf-btn-primary {
+    @apply bg-sf-navy-700 hover:bg-sf-navy-800 text-white px-4 py-2 rounded-md font-medium transition-colors;
+  }
+  
+  .sf-btn-secondary {
+    @apply bg-sf-honey-500 hover:bg-sf-honey-600 text-sf-navy-900 px-4 py-2 rounded-md font-medium transition-colors;
+  }
+  
+  .sf-input {
+    @apply w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sf-navy-500 focus:border-transparent;
+  }
+  
+  .sf-select {
+    @apply w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sf-navy-500 focus:border-transparent bg-white;
+  }
+  
+  .sf-badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  
+  .sf-badge-new {
+    @apply sf-badge bg-blue-100 text-blue-800;
+  }
+  
+  .sf-badge-progress {
+    @apply sf-badge bg-yellow-100 text-yellow-800;
+  }
+  
+  .sf-badge-resolved {
+    @apply sf-badge bg-green-100 text-green-800;
+  }
+  
+  .sf-badge-closed {
+    @apply sf-badge bg-gray-100 text-gray-800;
+  }
+  
+  .sf-table {
+    @apply min-w-full divide-y divide-gray-200;
+  }
+  
+  .sf-table th {
+    @apply px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider;
+  }
+  
+  .sf-table td {
+    @apply px-6 py-4 whitespace-nowrap text-sm text-gray-900;
+  }
+}
