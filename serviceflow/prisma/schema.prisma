@@ -1,0 +1,150 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  password     String
+  roleId       String?  @map("role_id")
+  groupId      String?  @map("group_id")
+  isActive     Boolean  @default(true) @map("is_active")
+  impersonateAs String? @map("impersonate_as")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  role                Role?      @relation(fields: [roleId], references: [id])
+  group               Group?     @relation(fields: [groupId], references: [id])
+  assignedTickets     Ticket[]   @relation("AssignedUser")
+  createdTickets      Ticket[]   @relation("CreatedUser")
+  assignedIncidents   Incident[] @relation("AssignedUser")
+  createdIncidents    Incident[] @relation("CreatedUser")
+  auditLogs           AuditLog[]
+
+  @@map("users")
+}
+
+model Role {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  permissions Json     // Store permissions as JSON
+  description String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  users User[]
+
+  @@map("roles")
+}
+
+model Group {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  users User[]
+
+  @@map("groups")
+}
+
+enum TicketState {
+  NEW
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+  REOPENED
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+model Ticket {
+  id               String      @id @default(cuid())
+  shortDescription String      @map("short_description")
+  description      String?
+  state            TicketState @default(NEW)
+  priority         Priority    @default(MEDIUM)
+  assignedToId     String?     @map("assigned_to")
+  createdById      String      @map("created_by")
+  workNotes        String?     @map("work_notes")
+  createdAt        DateTime    @default(now()) @map("created_at")
+  updatedAt        DateTime    @updatedAt @map("updated_at")
+
+  // Relations
+  assignedTo User? @relation("AssignedUser", fields: [assignedToId], references: [id])
+  createdBy  User  @relation("CreatedUser", fields: [createdById], references: [id])
+
+  @@map("tickets")
+}
+
+model Incident {
+  id               String      @id @default(cuid())
+  shortDescription String      @map("short_description")
+  description      String?
+  state            TicketState @default(NEW)
+  priority         Priority    @default(MEDIUM)
+  assignedToId     String?     @map("assigned_to")
+  createdById      String      @map("created_by")
+  workNotes        String?     @map("work_notes")
+  classification   String?     // Classification tag for incidents
+  createdAt        DateTime    @default(now()) @map("created_at")
+  updatedAt        DateTime    @updatedAt @map("updated_at")
+
+  // Relations
+  assignedTo User? @relation("AssignedUser", fields: [assignedToId], references: [id])
+  createdBy  User  @relation("CreatedUser", fields: [createdById], references: [id])
+
+  @@map("incidents")
+}
+
+enum AuditAction {
+  CREATE
+  UPDATE
+  DELETE
+  LOGIN
+  LOGOUT
+  IMPERSONATE_START
+  IMPERSONATE_END
+  STATE_CHANGE
+  ASSIGNMENT_CHANGE
+}
+
+model AuditLog {
+  id          String      @id @default(cuid())
+  userId      String      @map("user_id")
+  action      AuditAction
+  entityType  String      @map("entity_type") // e.g., "ticket", "incident", "user"
+  entityId    String?     @map("entity_id")
+  oldValues   Json?       @map("old_values")
+  newValues   Json?       @map("new_values")
+  description String?
+  ipAddress   String?     @map("ip_address")
+  userAgent   String?     @map("user_agent")
+  createdAt   DateTime    @default(now()) @map("created_at")
+
+  // Relations
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("audit_logs")
+}
