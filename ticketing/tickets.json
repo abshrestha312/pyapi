@@ -1,0 +1,61 @@
+{
+  "tickets": [
+    {
+      "id": "70d96561",
+      "title": "Fix login authentication bug",
+      "description": "Users are unable to log in with special characters in their passwords",
+      "status": "in_progress",
+      "priority": "high",
+      "assigned_to": "john.doe",
+      "category": "Bug",
+      "created_at": "2025-09-18T15:54:03.909498",
+      "updated_at": "2025-09-18T15:54:22.119467",
+      "comments": [
+        {
+          "id": "b63b8f9d",
+          "comment": "Status changed from 'open' to 'in_progress'. Note: Started investigating the authentication issue",
+          "author": "System",
+          "timestamp": "2025-09-18T15:54:20.849843"
+        },
+        {
+          "id": "e7ff79b7",
+          "comment": "Found the issue in the password validation regex",
+          "author": "john.doe",
+          "timestamp": "2025-09-18T15:54:22.119438"
+        }
+      ],
+      "tags": [
+        "authentication",
+        "login",
+        "urgent"
+      ]
+    },
+    {
+      "id": "bb73d072",
+      "title": "Database performance optimization",
+      "description": "Queries are running slowly on the user table during peak hours",
+      "status": "open",
+      "priority": "medium",
+      "assigned_to": "jane.smith",
+      "category": "Performance",
+      "created_at": "2025-09-18T15:54:06.200798",
+      "updated_at": "2025-09-18T15:54:06.200804",
+      "comments": [],
+      "tags": []
+    },
+    {
+      "id": "5b5b9a8b",
+      "title": "Add dark mode feature",
+      "description": "Users have requested a dark mode option for the application",
+      "status": "open",
+      "priority": "low",
+      "assigned_to": "",
+      "category": "Feature Request",
+      "created_at": "2025-09-18T15:54:06.740927",
+      "updated_at": "2025-09-18T15:54:06.740934",
+      "comments": [],
+      "tags": []
+    }
+  ],
+  "last_updated": "2025-09-18T15:54:22.119493"
+}
